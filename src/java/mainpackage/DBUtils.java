@@ -11,6 +11,9 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import java.sql.*;
+import javax.swing.JOptionPane;
+import javax.swing.table.*;
 
 /**
  *
@@ -40,24 +43,22 @@ public class DBUtils {
         }   
     }
     public static void main(String[] args){
-       // createNewDatabase("questions.db");
-       connect();
+       createNewDatabase("dementiahack.db");
+       //connect();
     }
     
     public static void createNewDatabase(String fileName)
     {
-       String url = "jbdc:sqlite" + fileName;
+       String url = "jdbc:sqlite:" + fileName;
        
        try (Connection conn = DriverManager.getConnection(url)){
            if (conn != null) {
                DatabaseMetaData meta = conn.getMetaData();
                System.out.println("The driver name is " + meta.getDriverName());
-               System.out.println("A new databse has been created.");
+               System.out.println("A new database has been created.");
            }
        } catch (SQLException e) {
            System.out.println(e.getMessage());
        }
-    }
-    
-    
+    }  
 }
