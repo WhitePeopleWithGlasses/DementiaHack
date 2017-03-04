@@ -21,7 +21,6 @@ public class QuestionsLog {
     public QuestionsLog() {
     }
     
-    public 
 
     public QuestionsLog(int questionId, String question, String correctAnswer, String userAnswer, Date date) {
         this.questionId = questionId;
