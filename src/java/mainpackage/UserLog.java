@@ -14,11 +14,20 @@ public class UserLog {
     private int id;
     private String name;
     private String userEmail;
-    private String careTaker;
-    private String careTakerEmail;
+    private String contact;
+    private String contactEmail;
     
     public UserLog(){
         
+    }
+    
+
+    public UserLog(int id, String name, String userEmail, String contact, String contactEmail) {
+        this.id = id;
+        this.name = name;
+        this.userEmail = userEmail;
+        this.contact = contact;
+        this.contactEmail = contactEmail;
     }
 
     public int getId() {
@@ -45,21 +54,20 @@ public class UserLog {
         this.userEmail = userEmail;
     }
 
-    public String getCareTaker() {
-        return careTaker;
+    public String getContact() {
+        return contact;
     }
 
-    public void setCareTaker(String careTaker) {
-        this.careTaker = careTaker;
+    public void setContact(String contact) {
+        this.contact = contact;
     }
 
-    public String getCareTakerEmail() {
-        return careTakerEmail;
+    public String getContactEmail() {
+        return contactEmail;
     }
 
-    public void setCareTakerEmail(String careTakerEmail) {
-        this.careTakerEmail = careTakerEmail;
+    public void setContactEmail(String contactEmail) {
+        this.contactEmail = contactEmail;
     }
-    
-    
+
 }
