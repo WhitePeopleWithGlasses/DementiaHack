@@ -5,15 +5,13 @@
  */
 package mainpackage;
 
-import javax.enterprise.context.ApplicationScoped;
-import javax.inject.Named;
+
 
 /**
  *
  * @author Travis
  */
-@ApplicationScoped
-@Named
+
 public class Questions {
     
 }
