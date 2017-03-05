@@ -36,7 +36,25 @@
             
           <h:panelGroup styleClass="row" layout="block">
             <h:panelGroup styleClass="col-sm-12 text-center" layout="block">
-                Questions
+                
+                 <h:form>
+                    <h:dataTable value="#{questionslog.}" var="q"
+    			headerClass="order-table-header"
+    			rowClasses="order-table-odd-row,order-table-even-row">
+
+    			<h:column>
+    				<!-- column header -->
+    				<f:facet name="header">Question Number</f:facet>
+    				<!-- row record -->
+    				#{q.getQuestion}
+    			</h:column>
+
+    		</h:dataTable>
+ 
+                    <!--<h:button value="Submit" outcome="Submit" />-->
+                    
+                </h:form>
+                
             </h:panelGroup>
           </h:panelGroup>
             
