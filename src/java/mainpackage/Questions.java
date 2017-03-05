@@ -6,6 +6,7 @@
 package mainpackage;
 
 import java.sql.Connection;
+import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -16,7 +17,6 @@ import java.util.logging.Logger;
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Named;
 
-
 /**
  *
  * @author Travis
@@ -24,22 +24,26 @@ import javax.inject.Named;
 @Named
 @ApplicationScoped
 public class Questions {
+
     private List<QuestionsLog> questionsLogs = new ArrayList<>();
     private QuestionsLog currentQuestion = new QuestionsLog();
-    
-    public Questions(){
-    currentQuestion = new QuestionsLog(0, "", "", "");
-    getDB();
+
+    public Questions() {
+        currentQuestion = new QuestionsLog(0, "", "", "");
+        getDB();
     }
-    
+
     public List<QuestionsLog> getQuestionLogs() {
-    return questionsLogs;
+        return questionsLogs;
     }
-    
+
     private static void getDB() {
-           try {
+        try {
             questionsLogs.clear();
-            Connection conn = DBUtils.connect();
+            //db parameters
+            String url = "jdbc:sqlite:dementiahack.db";
+            // create a connection to the database
+            Connection conn = DriverManager.getConnection(url);
             Statement stmt = conn.createStatement();
             ResultSet rs = stmt.executeQuery("SELECT * FROM currentQuestion");
             while (rs.next()) {
@@ -48,18 +52,18 @@ public class Questions {
                         rs.getString("question"),
                         rs.getString("answer"),
                         rs.getString("timesAsked")
-                );
+                )
                 questionsLogs.add(ql);
             }
         } catch (SQLException ex) {
-            Logger.getLogger(Questions.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(Questions.class.get).log(Level.SEVERE, null, ex);
             questionsLogs.clear();
         }
 
     }
-    
+
     public QuestionsLog getcurrentQuestion() {
-    return currentQuestion;
+        return currentQuestion;
     }
 
     public List<QuestionsLog> getQuestionsLogs() {
@@ -77,25 +81,38 @@ public class Questions {
     public void setCurrentQuestion(QuestionsLog currentQuestion) {
         this.currentQuestion = currentQuestion;
     }
-    
-    public String addQuestion() {
-    try {
-            questionsLogs.clear();
+
+    public QuestionsLog getQuestion(String question) {
+        for (QuestionsLog q : questionsLogs) {
+            if (q.getQuestion() == question) {
+                return q;
+            }
+        }
+        return null;
+    }
+
+    public boolean Question(String userAnswer, String correctAnswer) {
+        if userAnswer != correctAnswer {
             Connection conn = DBUtils.getConnection();
             Statement stmt = conn.createStatement();
-            stmt.executeQuery("INSERT INTO currentQuestion VALUSE (" + currentQuestion.getTimesAsked + "," + currentQuestion.getQuestion() + "," + getCorrectAnswer() + "");
-            while (rs.next()) {
-                QuestionsLog ql = new QuestionsLog(
-                        rs.getInt("questionId"),
-                        rs.getString("question"),
-                        rs.getString("answer"),
-                        rs.getString("timesAsked")
-                );
-                questionsLogs.add(ql);
-            }
-        } catch (SQLException ex) {
-            Logger.getLogger(Questions.class.getName()).log(Level.SEVERE, null, ex);
-            questionsLogs.clear();
+            stmt.executeQuery("INSERT INTO  VALUSE (" + currentQuestion.getTimesAsked + ",'" + currentQuestion.getUserAnswer() + "','" + getCorrectAnswer() + "'");
+            getDB();
         }
     }
+
+//    
+//    public String addQuestion() {
+//    try {
+//            questionsLogs.clear();
+//            Connection conn = DBUtils.getConnection();
+//            Statement stmt = conn.createStatement();
+//            stmt.executeQuery("INSERT INTO currentQuestion VALUSE (" + currentQuestion.getTimesAsked + ",'" + currentQuestion.getQuestion() + "','" + getCorrectAnswer() + "'");
+//            getDB();
+//            return "index";
+//            }
+//         catch (SQLException ex) {
+//            Logger.getLogger(Questions.class.getName()).log(Level.SEVERE, null, ex);
+//            questionsLogs.clear();
+//        }
+//    return "index";
 }
