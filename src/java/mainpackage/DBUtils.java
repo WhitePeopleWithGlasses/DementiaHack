@@ -12,6 +12,7 @@ import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.sql.*;
+import static java.sql.JDBCType.NULL;
 import javax.swing.JOptionPane;
 import javax.swing.table.*;
 
@@ -26,9 +27,9 @@ public class DBUtils {
        //connect();
        //createNewTable();
        //DBUtils app = new DBUtils();
-       //app.insertQuestion(1, "Who is awesome?", "Travis", 3);
+       //app.insertQuestion(3, "take 3", null);
       //updateTable();
-      selectAll();
+     // selectAll();
     }
     
     public static void updateTable(){
@@ -108,8 +109,9 @@ public class DBUtils {
         }
     }
     
-    public void insertQuestion(int questionId, String question, String answer, int timesAsked){
+    public void insertQuestion(int questionId, String question, String answer){
         String url = "jdbc:sqlite:dementiahack.db";
+        int DEFAULT = 0;
         String sql = "INSERT INTO questions(questionId, question, answer, timesAsked) VALUES(?,?,?,?)";
         
         try (Connection conn = DriverManager.getConnection(url);
@@ -117,7 +119,7 @@ public class DBUtils {
             pstmt.setInt(1, questionId);
             pstmt.setString(2, question);
             pstmt.setString(3, answer);
-            pstmt.setInt(4, timesAsked);
+            pstmt.setInt(4, DEFAULT);
             pstmt.executeUpdate();
         } catch (SQLException e){
             System.out.println(e.getMessage());
@@ -143,5 +145,7 @@ public class DBUtils {
             System.out.println(e.getMessage());
         }
     }
+    
+    
     
 }
