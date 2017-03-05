@@ -1,0 +1,16 @@
+
+/* 
+    Created on : 4-Mar-2017, 8:33:48 PM
+    Author     : Jasmyn Newton
+*/
+
+h4 {
+    color: #909090;
+}
+
+#logo {
+    max-width: 50%;
+    min-width: 175px;
+    display: block;
+    margin: auto;
+}
