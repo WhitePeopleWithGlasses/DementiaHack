@@ -29,7 +29,7 @@ public class DBUtils {
        //DBUtils app = new DBUtils();
        //app.insertQuestion(3, "take 3", null);
       //updateTable();
-     selectAll();
+     //selectAll();
     }
     
     public static void updateTable(){
@@ -145,7 +145,6 @@ public class DBUtils {
             System.out.println(e.getMessage());
         }
     }
-    
     
     
     
