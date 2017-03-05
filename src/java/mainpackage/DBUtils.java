@@ -29,7 +29,7 @@ public class DBUtils {
        //DBUtils app = new DBUtils();
        //app.insertQuestion(3, "take 3", null);
       //updateTable();
-     // selectAll();
+     selectAll();
     }
     
     public static void updateTable(){
@@ -50,7 +50,7 @@ public class DBUtils {
         }
     }
     
-    public void connect() {
+    public static void connect() {
         Connection conn = null;
         try {
             //db parameters
@@ -145,6 +145,8 @@ public class DBUtils {
             System.out.println(e.getMessage());
         }
     }
+    
+    
     
     
     
