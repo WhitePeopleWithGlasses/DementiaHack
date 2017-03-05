@@ -21,11 +21,39 @@ import javax.swing.table.*;
  */
 public class DBUtils {
 
-    public static void connect() {
+    public static void main(String[] args) throws Exception{
+       //createNewDatabase("dementiahack.db");
+       //connect();
+       //createNewTable();
+       //DBUtils app = new DBUtils();
+       //app.insertQuestion(1, "Who is awesome?", "Travis", 3);
+      //updateTable();
+      selectAll();
+    }
+    
+    public static void updateTable(){
+        //SQLite connection string
+        String url = "jdbc:sqlite:dementiahack.db";
+        
+        //SQL statement 
+        String sql = "ALTER TABLE questions \n" 
+                + " ADD COLUMN timesAsked integer \n"
+                + ";";
+        
+        try (Connection conn = DriverManager.getConnection(url);
+                Statement stmt = conn.createStatement()){
+            //create a new table
+            stmt.execute(sql);
+        } catch (SQLException e){
+            System.out.println(e.getMessage());
+        }
+    }
+    
+    public void connect() {
         Connection conn = null;
         try {
             //db parameters
-            String url = "jdbc:sqlite:questions.db";
+            String url = "jdbc:sqlite:dementiahack.db";
             // create a connection to the database
             conn = DriverManager.getConnection(url);
 
@@ -42,10 +70,7 @@ public class DBUtils {
             }
         }   
     }
-    public static void main(String[] args){
-       createNewDatabase("dementiahack.db");
-       //connect();
-    }
+
     
     public static void createNewDatabase(String fileName)
     {
@@ -61,4 +86,62 @@ public class DBUtils {
            System.out.println(e.getMessage());
        }
     }  
+    
+    public static void createNewTable(){
+        //SQLite connection string
+        String url = "jdbc:sqlite:dementiahack.db";
+        
+        //SQL statement for creating a new table
+        String sql = "CREATE TABLE IF NOT EXISTS questions (\n" 
+                + " questionId integer PRIMARY KEY, \n"
+                + " question text NOT NULL, \n"
+                + " answer text \n"
+                + " timesAsked integer \n"
+                + ");";
+        
+        try (Connection conn = DriverManager.getConnection(url);
+                Statement stmt = conn.createStatement()){
+            //create a new table
+            stmt.execute(sql);
+        } catch (SQLException e){
+            System.out.println(e.getMessage());
+        }
+    }
+    
+    public void insertQuestion(int questionId, String question, String answer, int timesAsked){
+        String url = "jdbc:sqlite:dementiahack.db";
+        String sql = "INSERT INTO questions(questionId, question, answer, timesAsked) VALUES(?,?,?,?)";
+        
+        try (Connection conn = DriverManager.getConnection(url);
+                PreparedStatement pstmt = conn.prepareStatement(sql)){
+            pstmt.setInt(1, questionId);
+            pstmt.setString(2, question);
+            pstmt.setString(3, answer);
+            pstmt.setInt(4, timesAsked);
+            pstmt.executeUpdate();
+        } catch (SQLException e){
+            System.out.println(e.getMessage());
+        }
+    }
+    
+    public static void selectAll(){
+        String url = "jdbc:sqlite:dementiahack.db";
+        String sql = "SELECT questionId, question, answer, timesAsked FROM questions";
+        
+        try (Connection conn = DriverManager.getConnection(url);
+             Statement stmt  = conn.createStatement();
+             ResultSet rs    = stmt.executeQuery(sql)){
+            
+            // loop through the result set
+            while (rs.next()) {
+                System.out.println(rs.getInt("questionId") +  "\t" + 
+                                   rs.getString("question") + "\t" +
+                                   rs.getString("answer") + "\t" +
+                                   rs.getInt("timesAsked"));
+            }
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
+    }
+    
 }
