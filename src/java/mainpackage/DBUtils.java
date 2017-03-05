@@ -15,6 +15,10 @@ import java.sql.*;
 import static java.sql.JDBCType.NULL;
 import javax.swing.JOptionPane;
 import javax.swing.table.*;
+import javax.mail.*;
+import java.util.Properties;
+import javax.mail.internet.InternetAddress;
+import javax.mail.internet.MimeMessage;
 
 /**
  *
@@ -30,6 +34,7 @@ public class DBUtils {
        //app.insertQuestion(3, "take 3", null);
       //updateTable();
      //selectAll();
+       email();
     }
     
     public static void updateTable(){
@@ -146,7 +151,42 @@ public class DBUtils {
         }
     }
     
-    
+    public static void email(){
+        final String username = "nuvorkwebtest@gmail.com";
+		final String password = "P@ssw0rd123";
+
+		Properties props = new Properties();
+		props.put("mail.smtp.auth", "true");
+		props.put("mail.smtp.starttls.enable", "true");
+		props.put("mail.smtp.host", "smtp.gmail.com");
+		props.put("mail.smtp.port", "587");
+
+		Session session = Session.getInstance(props,
+		  new javax.mail.Authenticator() {
+                        @Override
+			protected PasswordAuthentication getPasswordAuthentication() {
+				return new PasswordAuthentication(username, password);
+			}
+		  });
+
+		try {
+
+			Message message = new MimeMessage(session);
+			message.setFrom(new InternetAddress("nuvorkwebtest@gmail.com"));
+			message.setRecipients(Message.RecipientType.TO,
+				InternetAddress.parse("traviskelly172@gmail.com"));
+			message.setSubject("Report for " + "insert user here" + " for " + "insert date range here" );
+			message.setText("Dear Mail Crawler,"
+				+ "\n\n No spam to my email, please!");
+
+			Transport.send(message);
+
+			System.out.println("Done");
+
+		} catch (MessagingException e) {
+			throw new RuntimeException(e);
+		}
+    }
     
     
 }
