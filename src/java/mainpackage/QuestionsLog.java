@@ -12,6 +12,7 @@ import java.sql.Date;
  * @author Travis
  */
 public class QuestionsLog {
+    private int timesAsked;
     private int questionId;
     private String question;
     private String correctAnswer;
@@ -20,14 +21,22 @@ public class QuestionsLog {
 
     public QuestionsLog() {
     }
-    
 
-    public QuestionsLog(int questionId, String question, String correctAnswer, String userAnswer, Date date) {
+    public QuestionsLog(int timesAsked, int questionId, String question, String correctAnswer, String userAnswer, Date date) {
+        this.timesAsked = timesAsked;
         this.questionId = questionId;
         this.question = question;
         this.correctAnswer = correctAnswer;
         this.userAnswer = userAnswer;
         this.date = date;
+    }
+
+    public int getTimesAsked() {
+        return timesAsked;
+    }
+
+    public void setTimesAsked(int timesAsked) {
+        this.timesAsked = timesAsked;
     }
 
     public int getQuestionId() {
@@ -71,4 +80,5 @@ public class QuestionsLog {
     }
     
     
+
 }
